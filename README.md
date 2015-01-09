@@ -2,7 +2,7 @@ Plex on Centos 6.5
 
 Docker container for running Plex. 
   Access via http://localhost:32400/web
-  Supervisor via http://localhost:41091
+  Supervisor via http://localhost:9091
 
 Host setup
  
@@ -36,7 +36,7 @@ Host setup
        32414:32414/udp
        32469:32469
        32400:32400
-       41091:41091
+       9091:41091
 
 Build Container
 

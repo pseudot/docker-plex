@@ -14,3 +14,8 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# software files
+python/ez_setup.py
+plex/plexmediaserver.rpm
+os/epel-release-6-8.noarch.rpm

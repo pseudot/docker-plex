@@ -3,15 +3,25 @@ FROM centos:centos6
 
 MAINTAINER Pseudot <pseudot@outlook.com>
 
+RUN yum -y install wget
+
+# Download files or copy files
+COPY scripts/  /tmp/scripts
+RUN chmod +x /tmp/scripts/*.sh
+RUN /tmp/scripts/get_files.sh
+
+#Run local, if needed.
+#COPY python/ez_setup.py /tmp/ez_setup.py
+#COPY plex/plexmediaserver.rpm /tmp/plexmediaserver.rpm
+#COPY os/epel-release-6-8.noarch.rpm /tmp/
+
 # Add the EPEL repo
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
-COPY os/epel-release-6-8.noarch.rpm /tmp/
 RUN rpm -ivh /tmp/epel-release-6-8.noarch.rpm
 
 # Install Supervisor to control processes
 
 # Install easy_setup, python is already installed
-COPY python/ez_setup.py /tmp/ez_setup.py
 RUN python /tmp/ez_setup.py
 
 # Easy install supervisor, for running multiple procersses
@@ -22,15 +32,11 @@ RUN pip install supervisor==3.0
 RUN mkdir -p /usr/local/etc
 COPY supervisor/supervisord.conf /usr/local/etc/supervisord.conf
 COPY supervisor/supervisord_plex.conf /usr/local/etc/supervisor.d/supervisord_plex.conf
-## Supervisor Port: 41091
 
 # Fix missing locale definitions
 RUN localedef -c -i en_US -f UTF-8 en_US.UTF-8
 
 # Run plex rpm
-RUN yum -y install wget
-RUN wget https://downloads.plex.tv/plex-media-server/0.9.11.7.803-87d0708/plexmediaserver-0.9.11.7.803-87d0708.x86_64.rpm -O /tmp/plexmediaserver.rpm 
-#COPY plex/plexmediaserver.rpm /tmp/plexmediaserver.rpm
 RUN rpm -ivh /tmp/plexmediaserver.rpm
 
 # add the plex configuration, changes;
