@@ -11,18 +11,18 @@ RUN chmod +x /tmp/scripts/*.sh
 RUN /tmp/scripts/get_files.sh
 
 #Run local, if needed.
-#COPY python/ez_setup.py /tmp/ez_setup.py
-#COPY plex/plexmediaserver.rpm /tmp/plexmediaserver.rpm
-#COPY os/epel-release-6-8.noarch.rpm /tmp/
+#COPY python/ez_setup.py /tmp/python/ez_setup.py
+#COPY plex/plexmediaserver.rpm /tmp/plex/plexmediaserver.rpm
+#COPY os/epel-release-6-8.noarch.rpm /tmp/os/
 
 # Add the EPEL repo
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
-RUN rpm -ivh /tmp/epel-release-6-8.noarch.rpm
+RUN rpm -ivh /tmp/os/epel-release-6-8.noarch.rpm
 
 # Install Supervisor to control processes
 
 # Install easy_setup, python is already installed
-RUN python /tmp/ez_setup.py
+RUN python /tmp/python/ez_setup.py
 
 # Easy install supervisor, for running multiple procersses
 RUN easy_install pip==1.5.6
@@ -37,7 +37,7 @@ COPY supervisor/supervisord_plex.conf /usr/local/etc/supervisor.d/supervisord_pl
 RUN localedef -c -i en_US -f UTF-8 en_US.UTF-8
 
 # Run plex rpm
-RUN rpm -ivh /tmp/plexmediaserver.rpm
+RUN rpm -ivh /tmp/plex/plexmediaserver.rpm
 
 # add the plex configuration, changes;
 # Update user to root, as su plex doesn't work, causing plex not to start up

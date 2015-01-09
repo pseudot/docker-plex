@@ -1,11 +1,13 @@
-Plex on Centos 6.5
+Plex on Centos 6.5 docker container
 
 Docker container for running Plex. 
   Access via http://localhost:32400/web
   Supervisor via http://localhost:9091
 
-Host setup
+Container setup
  
+  Requires Docker 1.3+
+
   The container requires privileged access to run, e.g. --privileged=true
 
   Run the container with --net=host    
@@ -14,6 +16,7 @@ Host setup
   needs to be run, to enable the host IP range that is outside the docker subnet 
 
   The addition the host needs to have:
+
     ulimit -l 4000
     Firewall disable, or all the ports opened. 
 
@@ -38,10 +41,10 @@ Host setup
        32400:32400
        9091:41091
 
-Build Container
+To build container
 
 	docker build --rm=true -t="plex" .
 
-Run Container
+To run container
 
-	docker run --name plex -v /host//media:/container/media --privileged=true --net=host
+	docker run --name plex -v /host/media:/container/media --privileged=true --net=host
