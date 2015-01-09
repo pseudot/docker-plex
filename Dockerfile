@@ -53,12 +53,6 @@ COPY plex/setup_plex.sh  /usr/lib/plexmediaserver/setup_plex.sh
 RUN chmod +x /usr/lib/plexmediaserver/setup_plex.sh 
 RUN cd /usr/lib/plexmediaserver; /usr/lib/plexmediaserver/setup_plex.sh -f
 
-# Copy SSL 
-#COPY ssl/plex.pem /opt/plex/ssl/plex.pem
-#COPY ssl/plex.key /opt/plex/ssl/plex.key
-#RUN chmod 0700 /opt/plex/ssl/plex.key
-#RUN chmod 0700 /opt/plex/ssl/plex.pem
-
 # Remove temp files
 RUN rm -rf /tmp/*
 
